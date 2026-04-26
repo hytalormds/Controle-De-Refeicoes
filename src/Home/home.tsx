@@ -1,9 +1,15 @@
 import React, { useEffect, useCallback } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { homeScreenStyles } from "./homeScreen.styles";
-import { useMeals } from "../../hooks/useMeals";
+import { useMeals } from "../Storage/useMeals";
+import { MealCard } from "../components/MealCard";
 
 export default function Home() {
   const navigation = useNavigation<any>();
@@ -79,30 +85,18 @@ export default function Home() {
               <View key={date} style={homeScreenStyles.dateGroup}>
                 <Text style={homeScreenStyles.dateLabel}>{date}</Text>
                 {dateMeals.map((meal) => (
-                  <TouchableOpacity
+                  <MealCard
                     key={meal.id}
-                    style={[
-                      homeScreenStyles.mealItem,
-                      !meal.isWithinDiet && homeScreenStyles.mealItemOutOfDiet,
-                    ]}
-                    activeOpacity={0.7}
+                    time={meal.time}
+                    name={meal.name}
+                    isWithinDiet={meal.isWithinDiet}
                     onPress={() =>
                       navigation.navigate("Visualizar", {
                         meal,
                         mealId: meal.id,
                       })
                     }
-                  >
-                    <Text style={homeScreenStyles.mealTime}>{meal.time}</Text>
-                    <Text style={homeScreenStyles.mealName}>{meal.name}</Text>
-                    <View
-                      style={[
-                        homeScreenStyles.statusIndicator,
-                        !meal.isWithinDiet &&
-                          homeScreenStyles.statusIndicatorOutOfDiet,
-                      ]}
-                    />
-                  </TouchableOpacity>
+                  />
                 ))}
               </View>
             ))

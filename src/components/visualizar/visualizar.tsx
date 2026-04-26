@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
+  SafeAreaView,
   Text,
   View,
   TouchableOpacity,
   ScrollView,
-  Modal,
-  StyleSheet,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useMeals, Meal } from "../../Storage/useMeals";
+import { Header, ConfirmationDialog } from "../index";
 import { styles } from "./visualizar.styles";
-import { useMeals, Meal } from "../../hooks/useMeals";
 
 export default function Visualizar() {
   const navigation = useNavigation<any>();
@@ -59,60 +58,25 @@ export default function Visualizar() {
   if (!meal) {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backButtonText}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Refeição</Text>
-        </View>
+        <Header title="Refeição" onBackPress={() => navigation.goBack()} />
       </SafeAreaView>
     );
   }
 
   return (
     <>
-      <Modal visible={showDeleteConfirm} transparent animationType="fade">
-        <View style={confirmStyles.overlay}>
-          <View style={confirmStyles.dialog}>
-            <Text style={confirmStyles.title}>
-              Tem certeza que deseja excluir esta refeição?
-            </Text>
-
-            <View style={confirmStyles.buttonRow}>
-              <TouchableOpacity
-                style={[confirmStyles.button, confirmStyles.cancelButton]}
-                onPress={() => setShowDeleteConfirm(false)}
-              >
-                <Text style={confirmStyles.cancelText}>Cancelar</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[confirmStyles.button, confirmStyles.confirmButton]}
-                onPress={handleConfirmDelete}
-                disabled={isDeleting}
-              >
-                <Text style={confirmStyles.confirmText}>
-                  {isDeleting ? "Deletando..." : "Sim, excluir"}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <ConfirmationDialog
+        visible={showDeleteConfirm}
+        title="Tem certeza que deseja excluir esta refeição?"
+        confirmText="Sim, excluir"
+        cancelText="Cancelar"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowDeleteConfirm(false)}
+        isLoading={isDeleting}
+      />
 
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backButtonText}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Refeição</Text>
-        </View>
+        <Header title="Refeição" onBackPress={() => navigation.goBack()} />
 
         <ScrollView
           style={styles.scrollView}
@@ -175,52 +139,3 @@ export default function Visualizar() {
     </>
   );
 }
-
-const confirmStyles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dialog: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 20,
-    width: "80%",
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: "#333",
-    marginBottom: 24,
-    textAlign: "center",
-  },
-  buttonRow: {
-    flexDirection: "row",
-  },
-  button: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 6,
-    alignItems: "center",
-    marginRight: 12,
-  },
-  cancelButton: {
-    backgroundColor: "#f0f0f0",
-  },
-  confirmButton: {
-    backgroundColor: "#f44336",
-    marginRight: 0,
-  },
-  cancelText: {
-    color: "#333",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  confirmText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-});

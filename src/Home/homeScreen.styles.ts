@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { FONTS } from "../theme/fonts";
 
 export const homeScreenStyles = StyleSheet.create({
   container: {
@@ -18,6 +19,7 @@ export const homeScreenStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 16,
     fontWeight: "600",
+    fontFamily: FONTS.bold,
     color: "#333",
   },
   profileButton: {

@@ -1,37 +1,29 @@
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { SafeAreaView, Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Header } from "../index";
 import { styles } from "./confirmar.styles";
 
-export default function ConfirmarNao() {
+export default function ConfirmarSim() {
   const navigation = useNavigation<any>();
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.navigate("HomeScreen")}
-        >
-          <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity>
-      </View>
+      <Header title="" onBackPress={() => navigation.navigate("HomeScreen")} />
 
       <View style={styles.contentContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleError}>Que pena!</Text>
+          <Text style={styles.titleSuccess}>Continue assim!</Text>
         </View>
 
         <Text style={styles.subtitle}>
-          Você saiu da dieta dessa vez, mas continue se esforçando e não
-          desista!
+          Você continua dentro da dieta. Muito bem!
         </Text>
 
         <View style={styles.imageContainer}>
           <View style={styles.imagePlaceholder}>
             <Text style={styles.imagePlaceholderText}>
-              [Imagem de tentativa aqui]
+              ✅ Excelente trabalho!
             </Text>
           </View>
         </View>

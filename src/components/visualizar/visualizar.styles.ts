@@ -1,31 +1,10 @@
 import { StyleSheet } from "react-native";
+import { FONTS } from "../../theme/fonts";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fafafa",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    padding: 8,
-    marginRight: 12,
-  },
-  backButtonText: {
-    fontSize: 24,
-    color: "#333",
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#333",
   },
   scrollView: {
     flex: 1,
@@ -43,11 +22,13 @@ export const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: "600",
+    fontFamily: FONTS.semibold,
     color: "#666",
     marginBottom: 8,
   },
   value: {
     fontSize: 16,
+    fontFamily: FONTS.regular,
     color: "#333",
     lineHeight: 24,
   },
@@ -67,6 +48,7 @@ export const styles = StyleSheet.create({
   dietBadgeText: {
     fontWeight: "600",
     fontSize: 14,
+    fontFamily: FONTS.semibold,
   },
   dietBadgeTextYes: {
     color: "#4caf50",

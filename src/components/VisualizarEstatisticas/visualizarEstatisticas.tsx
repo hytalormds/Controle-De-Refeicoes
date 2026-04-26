@@ -1,8 +1,8 @@
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { SafeAreaView, Text, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useMeals } from "../../hooks/useMeals";
+import { useMeals } from "../../Storage/useMeals";
+import { Header } from "../index";
 import { styles } from "./visualizarEstatisticas.styles";
 
 export default function VisualizarEstatisticas() {
@@ -13,15 +13,7 @@ export default function VisualizarEstatisticas() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Estatísticas</Text>
-      </View>
+      <Header title="Estatísticas" onBackPress={() => navigation.goBack()} />
 
       <ScrollView
         style={styles.scrollView}
