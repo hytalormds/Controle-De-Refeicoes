@@ -10,13 +10,13 @@ import {
 } from "@expo-google-fonts/nunito-sans";
 
 // Importar telas
-import Home from "../Home/home";
-import Cadastro from "../components/cadastrar/cadastro";
-import ConfirmarSim from "../components/confirmar/confirmarSim";
-import ConfirmarNao from "../components/confirmar/confirmarNao";
-import VisualizarEstatisticas from "../components/VisualizarEstatisticas/visualizarEstatisticas";
-import Visualizar from "../components/visualizar/visualizar";
-import Editar from "../components/editar/editar";
+import Home from "@screens/Home/home";
+import Cadastro from "@screens/Cadastro/cadastro";
+import ConfirmarSim from "@screens/Confirmar/confirmarSim";
+import ConfirmarNao from "@screens/Confirmar/confirmarNao";
+import VisualizarEstatisticas from "@screens/VisualizarEstatisticas/visualizarEstatisticas";
+import Visualizar from "@screens/Visualizar/visualizar";
+import Editar from "@screens/Editar/editar";
 
 const Stack = createNativeStackNavigator();
 

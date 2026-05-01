@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  SafeAreaView,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useMeals, Meal } from "../../Storage/useMeals";
-import { Header, ConfirmationDialog } from "../index";
+import { PencilSimpleLine, Trash } from "phosphor-react-native";
+import { useMeals } from "@hooks/useMeals";
+import { Meal } from "@types/meal.types";
+import { Header, ConfirmationDialog } from "@components/index";
 import { styles } from "./visualizar.styles";
 
 export default function Visualizar() {
@@ -123,14 +120,16 @@ export default function Visualizar() {
                 style={styles.editButton}
                 onPress={() => navigation.navigate("Editar", { meal })}
               >
-                <Text style={styles.editButtonText}>Editar refeição</Text>
+                <PencilSimpleLine size={20} color="#fff" weight="bold" />
+                <Text style={styles.editButtonText}>Editar</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.deleteButton}
                 onPress={handleDelete}
               >
-                <Text style={styles.deleteButtonText}>Excluir refeição</Text>
+                <Trash size={20} color="#fff" weight="bold" />
+                <Text style={styles.deleteButtonText}>Excluir</Text>
               </TouchableOpacity>
             </View>
           </View>

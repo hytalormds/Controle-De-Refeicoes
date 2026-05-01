@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Text,
-  Alert,
-} from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useMeals, Meal } from "../../Storage/useMeals";
-import { Header, FormInput, DietQuestion } from "../index";
-import { styles } from "./editar.styles";
+import React, { useState } from "react";
+import { ScrollView, View, TouchableOpacity, Text, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import { useMeals } from "@hooks/useMeals";
+import { Header, FormInput, DietQuestion } from "@components/index";
+import { styles } from "./cadastro.styles";
 
-export default function Editar() {
+export default function Cadastro() {
   const navigation = useNavigation<any>();
-  const route = useRoute<any>();
-  const mealParam = route.params?.meal as Meal;
-  const { editMeal } = useMeals();
-  const [meal, setMeal] = useState<Meal | null>(null);
+  const { addMeal } = useMeals();
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [data, setData] = useState("");
@@ -25,18 +16,7 @@ export default function Editar() {
   const [dietaStatus, setDietaStatus] = useState<"sim" | "nao" | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (mealParam) {
-      setMeal(mealParam);
-      setNome(mealParam.name);
-      setDescricao(mealParam.description);
-      setData(mealParam.date);
-      setHora(mealParam.time);
-      setDietaStatus(mealParam.isWithinDiet ? "sim" : "nao");
-    }
-  }, [mealParam]);
-
-  const handleSave = async () => {
+  const handleCadastro = async () => {
     if (!nome.trim()) {
       Alert.alert("Erro", "Por favor, preencha o nome da refeição");
       return;
@@ -56,48 +36,33 @@ export default function Editar() {
 
     setLoading(true);
 
-    if (!meal) {
-      Alert.alert("Erro", "Refeição não encontrada.");
-      setLoading(false);
-      return;
-    }
-
     try {
-      const success = await editMeal(meal.id, {
+      const newMeal = await addMeal({
+        time: hora,
         name: nome,
         description: descricao,
         date: data,
-        time: hora,
         isWithinDiet: dietaStatus === "sim",
       });
 
-      if (success) {
-        navigation.navigate("HomeScreen");
-      } else {
-        Alert.alert("Erro", "Erro ao atualizar refeição. Tente novamente.");
+      if (newMeal) {
+        if (dietaStatus === "sim") {
+          navigation.navigate("ConfirmarSim");
+        } else {
+          navigation.navigate("ConfirmarNao");
+        }
       }
     } catch (error) {
-      Alert.alert("Erro", "Erro ao atualizar refeição. Tente novamente.");
-      console.error("Erro ao editar:", error);
+      Alert.alert("Erro", "Erro ao salvar refeição. Tente novamente.");
+      console.error("Erro ao cadastrar:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  if (!meal) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Header
-          title="Editar refeição"
-          onBackPress={() => navigation.goBack()}
-        />
-      </SafeAreaView>
-    );
-  }
-
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Editar refeição" onBackPress={() => navigation.goBack()} />
+      <Header title="Nova refeição" onBackPress={() => navigation.goBack()} />
 
       <ScrollView
         style={styles.formContainer}
@@ -153,11 +118,11 @@ export default function Editar() {
       <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
         <TouchableOpacity
           style={[styles.button, loading && { opacity: 0.6 }]}
-          onPress={handleSave}
+          onPress={handleCadastro}
           disabled={loading}
         >
           <Text style={styles.buttonText}>
-            {loading ? "Salvando..." : "Atualizar refeição"}
+            {loading ? "Salvando..." : "Cadastrar refeição"}
           </Text>
         </TouchableOpacity>
       </View>

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { FONTS } from "../../theme/fonts";
+import { FONTS } from "@theme/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -68,11 +68,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 12,
     flex: 1,
+    flexDirection: "row",
+    gap: 8,
   },
   editButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+    fontFamily: FONTS.bold,
   },
   deleteButton: {
     backgroundColor: "#f44336",
@@ -81,10 +84,13 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
+    flexDirection: "row",
+    gap: 8,
   },
   deleteButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+    fontFamily: FONTS.bold,
   },
 });

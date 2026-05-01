@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { DietButton } from "./DietButton";
-import { FONTS } from "../theme/fonts";
+import { FONTS } from "@theme/fonts";
 
 interface DietQuestionProps {
   value: "sim" | "nao" | null;

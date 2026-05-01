@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { FONTS } from "../theme/fonts";
+import { FONTS } from "@theme/fonts";
 
 interface ConfirmationDialogProps {
   visible: boolean;

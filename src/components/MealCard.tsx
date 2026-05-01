@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 import { StyleSheet } from "react-native";
-import { FONTS } from "../theme/fonts";
+import { FONTS } from "@theme/fonts";
 
 interface MealCardProps {
   time: string;

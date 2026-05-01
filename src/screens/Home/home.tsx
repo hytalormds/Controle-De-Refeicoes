@@ -1,15 +1,11 @@
 import React, { useEffect, useCallback } from "react";
-import {
-  SafeAreaView,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { Text, View, TouchableOpacity, ScrollView, Image } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { ArrowUpRight, Plus } from "phosphor-react-native";
 import { homeScreenStyles } from "./homeScreen.styles";
-import { useMeals } from "../Storage/useMeals";
-import { MealCard } from "../components/MealCard";
+import { useMeals } from "@hooks/useMeals";
+import { MealCard } from "@components/MealCard";
 
 export default function Home() {
   const navigation = useNavigation<any>();
@@ -42,13 +38,14 @@ export default function Home() {
   return (
     <SafeAreaView style={homeScreenStyles.container}>
       <View style={homeScreenStyles.header}>
-        <Text style={homeScreenStyles.headerTitle}>Daily Diet</Text>
-        <TouchableOpacity
-          style={homeScreenStyles.profileButton}
-          onPress={() => navigation.navigate("VisualizarEstatisticas")}
-        >
+        <Image
+          source={require("../../../assets/logo.png")}
+          style={homeScreenStyles.logo}
+          resizeMode="contain"
+        />
+        <View style={homeScreenStyles.profileButton}>
           <Text style={homeScreenStyles.profileIcon}>👤</Text>
-        </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView
@@ -57,10 +54,22 @@ export default function Home() {
       >
         <View style={homeScreenStyles.content}>
           <View style={homeScreenStyles.statisticsContainer}>
-            <Text style={homeScreenStyles.statisticsValue}>{statistics}%</Text>
-            <Text style={homeScreenStyles.statisticsLabel}>
-              das refeições dentro da dieta
-            </Text>
+            <View style={homeScreenStyles.statisticsContent}>
+              <View>
+                <Text style={homeScreenStyles.statisticsValue}>
+                  {statistics}%
+                </Text>
+                <Text style={homeScreenStyles.statisticsLabel}>
+                  das refeições dentro da dieta
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={homeScreenStyles.statisticsIconButton}
+                onPress={() => navigation.navigate("VisualizarEstatisticas")}
+              >
+                <ArrowUpRight size={24} color="#4caf50" weight="bold" />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={homeScreenStyles.mealsHeader}>
@@ -69,7 +78,7 @@ export default function Home() {
               style={homeScreenStyles.addMealButton}
               onPress={() => navigation.navigate("Cadastro")}
             >
-              <Text style={homeScreenStyles.addMealButtonText}>+</Text>
+              <Plus size={20} color="#fff" weight="bold" />
               <Text style={homeScreenStyles.addMealButtonText}>
                 Nova refeição
               </Text>

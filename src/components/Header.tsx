@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
-import { FONTS } from "../theme/fonts";
+import { ArrowLeft } from "phosphor-react-native";
+import { FONTS } from "@theme/fonts";
 
 interface HeaderProps {
   title: string;
@@ -12,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onBackPress }) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
-        <Text style={styles.backButtonText}>←</Text>
+        <ArrowLeft size={24} color="#333" weight="bold" />
       </TouchableOpacity>
       <Text style={styles.headerTitle}>{title}</Text>
     </View>
@@ -38,9 +39,5 @@ const styles = StyleSheet.create({
   backButton: {
     padding: 8,
     marginRight: 12,
-  },
-  backButtonText: {
-    fontSize: 24,
-    color: "#333",
   },
 });

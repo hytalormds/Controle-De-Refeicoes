@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Text,
-  Alert,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useMeals } from "../../Storage/useMeals";
-import { Header, FormInput, DietQuestion } from "../index";
-import { styles } from "./cadastro.styles";
+import React, { useState, useEffect } from "react";
+import { ScrollView, View, TouchableOpacity, Text, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useMeals } from "@hooks/useMeals";
+import { Meal } from "@types/meal.types";
+import { Header, FormInput, DietQuestion } from "@components/index";
+import { styles } from "./editar.styles";
 
-export default function Cadastro() {
+export default function Editar() {
   const navigation = useNavigation<any>();
-  const { addMeal } = useMeals();
+  const route = useRoute<any>();
+  const mealParam = route.params?.meal as Meal;
+  const { editMeal } = useMeals();
+  const [meal, setMeal] = useState<Meal | null>(null);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [data, setData] = useState("");
@@ -22,7 +20,18 @@ export default function Cadastro() {
   const [dietaStatus, setDietaStatus] = useState<"sim" | "nao" | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleCadastro = async () => {
+  useEffect(() => {
+    if (mealParam) {
+      setMeal(mealParam);
+      setNome(mealParam.name);
+      setDescricao(mealParam.description);
+      setData(mealParam.date);
+      setHora(mealParam.time);
+      setDietaStatus(mealParam.isWithinDiet ? "sim" : "nao");
+    }
+  }, [mealParam]);
+
+  const handleSave = async () => {
     if (!nome.trim()) {
       Alert.alert("Erro", "Por favor, preencha o nome da refeição");
       return;
@@ -42,33 +51,48 @@ export default function Cadastro() {
 
     setLoading(true);
 
+    if (!meal) {
+      Alert.alert("Erro", "Refeição não encontrada.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const newMeal = await addMeal({
-        time: hora,
+      const success = await editMeal(meal.id, {
         name: nome,
         description: descricao,
         date: data,
+        time: hora,
         isWithinDiet: dietaStatus === "sim",
       });
 
-      if (newMeal) {
-        if (dietaStatus === "sim") {
-          navigation.navigate("ConfirmarSim");
-        } else {
-          navigation.navigate("ConfirmarNao");
-        }
+      if (success) {
+        navigation.navigate("HomeScreen");
+      } else {
+        Alert.alert("Erro", "Erro ao atualizar refeição. Tente novamente.");
       }
     } catch (error) {
-      Alert.alert("Erro", "Erro ao salvar refeição. Tente novamente.");
-      console.error("Erro ao cadastrar:", error);
+      Alert.alert("Erro", "Erro ao atualizar refeição. Tente novamente.");
+      console.error("Erro ao editar:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  if (!meal) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Header
+          title="Editar refeição"
+          onBackPress={() => navigation.goBack()}
+        />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Nova refeição" onBackPress={() => navigation.goBack()} />
+      <Header title="Editar refeição" onBackPress={() => navigation.goBack()} />
 
       <ScrollView
         style={styles.formContainer}
@@ -124,11 +148,11 @@ export default function Cadastro() {
       <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
         <TouchableOpacity
           style={[styles.button, loading && { opacity: 0.6 }]}
-          onPress={handleCadastro}
+          onPress={handleSave}
           disabled={loading}
         >
           <Text style={styles.buttonText}>
-            {loading ? "Salvando..." : "Cadastrar refeição"}
+            {loading ? "Salvando..." : "Atualizar refeição"}
           </Text>
         </TouchableOpacity>
       </View>

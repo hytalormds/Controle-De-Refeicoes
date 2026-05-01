@@ -1,8 +1,9 @@
 import React from "react";
-import { SafeAreaView, Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { useMeals } from "../../Storage/useMeals";
-import { Header } from "../index";
+import { useMeals } from "@hooks/useMeals";
+import { Header } from "@components/index";
 import { styles } from "./visualizarEstatisticas.styles";
 
 export default function VisualizarEstatisticas() {

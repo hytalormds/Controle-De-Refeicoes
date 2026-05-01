@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { FONTS } from "../theme/fonts";
+import { FONTS } from "@theme/fonts";
 
 export const homeScreenStyles = StyleSheet.create({
   container: {
@@ -11,7 +11,8 @@ export const homeScreenStyles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 20,
+    paddingBottom: 16,
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
@@ -21,6 +22,10 @@ export const homeScreenStyles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: FONTS.bold,
     color: "#333",
+  },
+  logo: {
+    height: 40,
+    width: 120,
   },
   profileButton: {
     width: 32,
@@ -44,19 +49,28 @@ export const homeScreenStyles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 16,
     marginBottom: 24,
-    alignItems: "center",
+  },
+  statisticsContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   statisticsValue: {
     fontSize: 32,
     fontWeight: "700",
+    fontFamily: FONTS.bold,
     color: "#4caf50",
     marginBottom: 8,
   },
   statisticsLabel: {
     fontSize: 14,
+    fontFamily: FONTS.regular,
     color: "#666",
     textAlign: "center",
     lineHeight: 20,
+  },
+  statisticsIconButton: {
+    padding: 8,
   },
   mealsHeader: {
     flexDirection: "row",
@@ -77,11 +91,13 @@ export const homeScreenStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginRight: 6,
+    gap: 8,
   },
   addMealButtonText: {
     color: "#fff",
     fontSize: 14,
     fontWeight: "600",
+    fontFamily: FONTS.semibold,
   },
   dateGroup: {
     marginBottom: 20,
