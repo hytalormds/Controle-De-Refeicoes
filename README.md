@@ -12,7 +12,6 @@ Os campos disponíveis para cadastro são:
 ## 🔄 Fluxo de Navegação
 O processo de uso do aplicativo segue o seguinte fluxo:
 
-- **Tela de boas-vindas**
   - Exibir porcentagem de refeições (ao clicar, mostra informações gerais sobre a dieta)
   - Criar nova refeição (permite cadastro)
   - Selecionar refeição cadastrada → **Editar refeição**
